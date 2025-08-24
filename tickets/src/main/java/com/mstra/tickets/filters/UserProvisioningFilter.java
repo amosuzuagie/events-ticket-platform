@@ -1,6 +1,6 @@
 package com.mstra.tickets.filters;
 
-import com.mstra.tickets.domain.User;
+import com.mstra.tickets.domain.entities.User;
 import com.mstra.tickets.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

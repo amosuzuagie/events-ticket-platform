@@ -1,4 +1,4 @@
-package com.mstra.tickets.domain;
+package com.mstra.tickets.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
