@@ -1,6 +1,6 @@
 services:
   # PostgreSQL database
-  postgre:
+  db:
     image: postgres:latest
     ports:
       - "5434:5432"

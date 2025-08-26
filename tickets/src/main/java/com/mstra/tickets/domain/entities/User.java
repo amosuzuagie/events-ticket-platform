@@ -40,6 +40,7 @@ public class User {
     )
     private List<Event> attendingEvents = new ArrayList<>();
 
+    @ManyToMany
     @JoinTable(
             name = "user_staffing_events",
             joinColumns = @JoinColumn(name = "user_id"),
