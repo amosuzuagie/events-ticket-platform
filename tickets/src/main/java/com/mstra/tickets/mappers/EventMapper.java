@@ -2,10 +2,7 @@ package com.mstra.tickets.mappers;
 
 import com.mstra.tickets.domain.CreateEventRequest;
 import com.mstra.tickets.domain.CreateTicketTypeRequest;
-import com.mstra.tickets.domain.dtos.CreateEventRequestDto;
-import com.mstra.tickets.domain.dtos.CreateEventResponseDto;
-import com.mstra.tickets.domain.dtos.ListEventResponseDto;
-import com.mstra.tickets.domain.dtos.ListEventTicketTypeResponseDto;
+import com.mstra.tickets.domain.dtos.*;
 import com.mstra.tickets.domain.entities.Event;
 import com.mstra.tickets.domain.entities.TicketType;
 import org.mapstruct.Mapper;
@@ -22,4 +19,8 @@ public interface EventMapper {
     ListEventTicketTypeResponseDto toDto(TicketType ticketType);
 
     ListEventResponseDto toListEventResponseDto(Event event);
+
+    GetEventTicketTypesResponseDto toGetEventDetailsTicketTypesResponseDto(TicketType ticketType);
+
+    GetEventDetailsResponseDto toGetEventDetailsResponseDto(Event event);
 }

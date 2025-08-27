@@ -3,6 +3,7 @@ package com.mstra.tickets.controllers;
 import com.mstra.tickets.domain.CreateEventRequest;
 import com.mstra.tickets.domain.dtos.CreateEventRequestDto;
 import com.mstra.tickets.domain.dtos.CreateEventResponseDto;
+import com.mstra.tickets.domain.dtos.GetEventDetailsResponseDto;
 import com.mstra.tickets.domain.dtos.ListEventResponseDto;
 import com.mstra.tickets.domain.entities.Event;
 import com.mstra.tickets.mappers.EventMapper;
@@ -46,6 +47,16 @@ public class EventController {
     ) {
         Page<Event> events = eventService.listEventsForOrganizer(parseUserId(jwt), pageable);
         return ResponseEntity.ok(events.map(eventMapper::toListEventResponseDto));
+    }
+
+    @GetMapping("/{eventId}")
+    public ResponseEntity<GetEventDetailsResponseDto> getEvent(
+            @AuthenticationPrincipal Jwt jwt, @PathVariable UUID eventId
+    ) {
+        return eventService.getEventForOrganizer(parseUserId(jwt), eventId)
+                .map(eventMapper::toGetEventDetailsResponseDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     private UUID parseUserId(Jwt jwt) {
