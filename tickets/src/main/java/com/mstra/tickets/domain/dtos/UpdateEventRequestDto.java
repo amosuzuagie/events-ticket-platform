@@ -19,7 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class UpdateEventRequestDto {
 
-    @NotBlank(message = "Event ID must be provided")
+    @NotNull(message = "Event ID must be provided")
     private UUID id;
 
     @NotBlank(message = "Event name must be provided")

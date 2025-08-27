@@ -64,13 +64,13 @@ public class EventController {
             @Valid @RequestBody UpdateEventRequestDto updateEventRequestDto
     ) {
         UpdateEventRequest eventRequest = eventMapper.fromDto(updateEventRequestDto);
-        UUID userId = parseUserId(jwt);
 
         Event updatedEvent = eventService.updateEventForOrganizer(
                 parseUserId(jwt), eventId, eventRequest
         );
 
         UpdateEventResponseDto responseDto = eventMapper.toUpdateEventResponseDto(updatedEvent);
+
         return ResponseEntity.ok(responseDto);
 
     }
