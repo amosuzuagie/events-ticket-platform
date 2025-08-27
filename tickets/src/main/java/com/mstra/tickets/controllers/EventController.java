@@ -1,10 +1,8 @@
 package com.mstra.tickets.controllers;
 
 import com.mstra.tickets.domain.CreateEventRequest;
-import com.mstra.tickets.domain.dtos.CreateEventRequestDto;
-import com.mstra.tickets.domain.dtos.CreateEventResponseDto;
-import com.mstra.tickets.domain.dtos.GetEventDetailsResponseDto;
-import com.mstra.tickets.domain.dtos.ListEventResponseDto;
+import com.mstra.tickets.domain.UpdateEventRequest;
+import com.mstra.tickets.domain.dtos.*;
 import com.mstra.tickets.domain.entities.Event;
 import com.mstra.tickets.mappers.EventMapper;
 import com.mstra.tickets.services.EventService;
@@ -57,6 +55,24 @@ public class EventController {
                 .map(eventMapper::toGetEventDetailsResponseDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{eventId}")
+    public ResponseEntity<UpdateEventResponseDto> updateEvent(
+            @AuthenticationPrincipal Jwt jwt,
+            @PathVariable UUID eventId,
+            @Valid @RequestBody UpdateEventRequestDto updateEventRequestDto
+    ) {
+        UpdateEventRequest eventRequest = eventMapper.fromDto(updateEventRequestDto);
+        UUID userId = parseUserId(jwt);
+
+        Event updatedEvent = eventService.updateEventForOrganizer(
+                parseUserId(jwt), eventId, eventRequest
+        );
+
+        UpdateEventResponseDto responseDto = eventMapper.toUpdateEventResponseDto(updatedEvent);
+        return ResponseEntity.ok(responseDto);
+
     }
 
     private UUID parseUserId(Jwt jwt) {
