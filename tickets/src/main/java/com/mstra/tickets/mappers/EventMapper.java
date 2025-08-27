@@ -4,7 +4,10 @@ import com.mstra.tickets.domain.CreateEventRequest;
 import com.mstra.tickets.domain.CreateTicketTypeRequest;
 import com.mstra.tickets.domain.dtos.CreateEventRequestDto;
 import com.mstra.tickets.domain.dtos.CreateEventResponseDto;
+import com.mstra.tickets.domain.dtos.ListEventResponseDto;
+import com.mstra.tickets.domain.dtos.ListEventTicketTypeResponseDto;
 import com.mstra.tickets.domain.entities.Event;
+import com.mstra.tickets.domain.entities.TicketType;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
@@ -15,4 +18,8 @@ public interface EventMapper {
     CreateEventRequest fromDto(CreateEventRequestDto dto);
 
     CreateEventResponseDto toDto(Event event);
+
+    ListEventTicketTypeResponseDto toDto(TicketType ticketType);
+
+    ListEventResponseDto toListEventResponseDto(Event event);
 }
