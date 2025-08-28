@@ -19,7 +19,7 @@ public class SecurityConfig {
 
         return http.authorizeHttpRequests(authorize ->
                 authorize
-                        .requestMatchers(HttpMethod.GET, "/api/v1/published-events").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/published-events/**").permitAll()
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session ->
