@@ -44,10 +44,7 @@ public class UserProvisioningFilter extends OncePerRequestFilter {
                 user.setEmail(jwt.getClaimAsString("email"));
                 userRepository.save(user);
             }
-
-            filterChain.doFilter(request, response);
-
         }
-
+        filterChain.doFilter(request, response);
     }
 }

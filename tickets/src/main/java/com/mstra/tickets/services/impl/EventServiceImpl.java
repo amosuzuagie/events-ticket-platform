@@ -4,6 +4,7 @@ import com.mstra.tickets.domain.CreateEventRequest;
 import com.mstra.tickets.domain.UpdateEventRequest;
 import com.mstra.tickets.domain.UpdateTicketTypeRequest;
 import com.mstra.tickets.domain.entities.Event;
+import com.mstra.tickets.domain.entities.EventStatusEnum;
 import com.mstra.tickets.domain.entities.TicketType;
 import com.mstra.tickets.domain.entities.User;
 import com.mstra.tickets.exception.EventNotFoundException;
@@ -57,7 +58,7 @@ public class EventServiceImpl implements EventService {
         event.setSaleStart(request.getStart());
         event.setSaleEnd(request.getEnd());
         event.setOrganizer(organizer);
-        event.setStatus(request.getStatus());
+        event.setStatus(EventStatusEnum.PUBLISHED);
         event.setTicketTypes(ticketTypes);
 
         return eventRepository.save(event);
@@ -138,5 +139,10 @@ public class EventServiceImpl implements EventService {
     @Transactional
     public void deleteEventForOrganizer(UUID organizerId, UUID id) {
         getEventForOrganizer(organizerId, id).ifPresent(eventRepository::delete);
+    }
+
+    @Override
+    public Page<Event> listPublishedEvents(Pageable pageable) {
+        return eventRepository.findByStatus(EventStatusEnum.PUBLISHED, pageable);
     }
 }
