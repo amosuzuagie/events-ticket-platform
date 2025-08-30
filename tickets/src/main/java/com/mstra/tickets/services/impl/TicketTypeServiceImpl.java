@@ -54,4 +54,9 @@ public class TicketTypeServiceImpl implements TicketTypeService {
 
         return ticketRepository.save(savedTicket);
     }
+
+//    @Override
+//    public Page<Ticket> findByPurchaserId(UUID purchaserId, Pageable pageable) {
+//        return null;
+//    }
 }
