@@ -1,10 +1,7 @@
 package com.mstra.tickets.controllers;
 
 import com.mstra.tickets.domain.dtos.ErrorDto;
-import com.mstra.tickets.exception.EventNotFoundException;
-import com.mstra.tickets.exception.EventUpdateException;
-import com.mstra.tickets.exception.TicketTypeNotFoundException;
-import com.mstra.tickets.exception.UserNotFoundException;
+import com.mstra.tickets.exception.*;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -90,5 +87,29 @@ public class GlobalExceptionHandler {
         ErrorDto errorDto = new ErrorDto();
         errorDto.setError("Unable to update event.");
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(QrCodeGenerationException.class)
+    public ResponseEntity<ErrorDto> handleQrCodeGenerationException(QrCodeGenerationException ex) {
+        log.error("Caught QrCodeGenerationException:", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setError("Unable to generate QrCode.");
+        return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(QrCodeNotFoundException.class)
+    public ResponseEntity<ErrorDto> handleQrCodeNotFoundException(QrCodeNotFoundException ex) {
+        log.error("Caught QrCodeNotFoundException:", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setError("QR Code not found.");
+        return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(TicketSoldOutException.class)
+    public ResponseEntity<ErrorDto> handleTicketSoldOutException(TicketSoldOutException ex) {
+        log.error("Caught TicketSoldOutException:", ex);
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setError("Tickets are sold out for this ticket type.");
+        return new ResponseEntity<>(errorDto, HttpStatus.GONE);
     }
 }
