@@ -28,23 +28,21 @@ public class TicketValidationServiceImpl implements TicketValidationService {
                 .orElseThrow(() -> new QrCodeNotFoundException(String.format(
                         "QR Code with ID '%s' was not found.", qrCodeId
                 )));
-
         Ticket ticket = qrCode.getTicket();
-
-        return validateTicket(ticket);
+        return validateTicket(ticket, TicketValidationMethod.QR_SCAN);
     }
 
     @Override
     public TicketValidation validateTicketManually(UUID ticketId) {
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(TicketNotFoundException::new);
-        return validateTicket(ticket);
+        return validateTicket(ticket, TicketValidationMethod.MANUAL);
     }
 
-    private TicketValidation validateTicket(Ticket ticket) {
+    private TicketValidation validateTicket(Ticket ticket, TicketValidationMethod ticketValidationMethod) {
         TicketValidation ticketValidation = new TicketValidation();
         ticketValidation.setTicket(ticket);
-        ticketValidation.setValidationMethod(TicketValidationMethod.QR_SCAN);
+        ticketValidation.setValidationMethod(ticketValidationMethod);
 
         //Ensuring ticket is validate once
         TicketValidationStatusEnum validationStatusEnum = ticket.getValidations().stream()

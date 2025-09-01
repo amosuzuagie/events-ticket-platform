@@ -24,6 +24,11 @@ public class SecurityConfig {
         return http.authorizeHttpRequests(authorize ->
                 authorize
                         .requestMatchers(HttpMethod.GET, "/api/v1/published-events/**").permitAll()
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
                         .requestMatchers("/api/v1/events").hasRole("ORGANIZER")
                         .requestMatchers("/api/v1/ticket-validation").hasRole("STAFF")
                         .anyRequest().authenticated())
